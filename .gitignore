@@ -1,0 +1,15 @@
+log/*.log
+db/*.sqlite3
+config/database.yml
+.bundle
+.project
+*~
+._*
+.tmp_*
+test/integration/webrat-*
+tmp
+nbproject/*
+public/assets/*
+.eprj
+capybara-*.html
+.redcar

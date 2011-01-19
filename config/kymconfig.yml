@@ -1,0 +1,14 @@
+defaults: &defaults
+  kym_base_uri: http://knowyourmeme.com
+  kym_memes_ctrl: memes
+  kym_videos_ctrl: videos
+  kym_photos_ctrl: photos
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -1,0 +1,8 @@
+<%# raise @memes.inspect %>
+<table>
+  <tr><th>ID</th><th>NAME</th></tr>
+<% @memes.each do |meme| %>
+  <tr><td><img src="<%= meme[:thumb] %>" alt="" /></td><td><%= link_to meme[:title], meme_url(meme[:slug]) %></td></tr>
+<% end %>
+</table>
+<%= @memes.to_json %>
