@@ -2,7 +2,7 @@ class MemesController < ApplicationController
   respond_to :html, :xml, :json
 
   def index
-    clt = HTTPClient.new(:agent_name => "Firefox")
+    clt = HTTPClient.new(:agent_name => KYM_CONFIG['api_agent_name'])
     page_num = (params[:page].nil? ? 1 : params[:page])
     res = clt.get "#{KYM_CONFIG['kym_base_uri']}/memes/all?page=#{page_num}"
     hpdoc = Hpricot res.content

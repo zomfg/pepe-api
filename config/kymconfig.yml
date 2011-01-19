@@ -1,4 +1,5 @@
 defaults: &defaults
+  api_agent_name: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0b9) Gecko/20100101 Firefox/4.0b9
   kym_base_uri: http://knowyourmeme.com
   kym_memes_ctrl: memes
   kym_videos_ctrl: videos
