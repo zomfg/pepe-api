@@ -13,14 +13,14 @@ class MemesController < ApplicationController
       @memes << {
         :title => title_link.inner_text,
         :slug => title_link.attributes['href'].split('/').last,
-        :thumb => thumb['src'].split('?').first
+        :thumb => thumb['src']
         }
     end
     respond_with @memes
   end
 
   def show
-    clt = HTTPClient.new(:agent_name => "Firefox")
+    clt = HTTPClient.new(:agent_name => KYM_CONFIG['api_agent_name'])
     res = clt.get "#{KYM_CONFIG['kym_base_uri']}/memes/#{params[:meme_name]}.json"
     @meme = JSON.parse res.content
     respond_with @meme

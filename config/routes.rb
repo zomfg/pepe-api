@@ -1,10 +1,15 @@
 Kym::Application.routes.draw do
 
 
+  match 'episodes' => 'episodes#index', :as => :episodes
+  match 'updates' => 'updates#index', :as => :updates
+  match 'videos' => 'videos#index', :as => :videos
+  match 'pictures' => 'pictures#index', :as => :pictures
   match 'memes' => 'memes#index', :as => :memes
   match 'memes/:meme_name' => 'memes#show', :as => :meme
   match 'memes/:meme_name/videos' => 'videos#index', :as => :meme_videos
   match 'memes/:meme_name/pictures' => 'pictures#index', :as => :meme_pictures
+  match 'memes/:meme_name/comments' => 'comments#index', :as => :meme_comments
 
   match ':page_name' => 'pages#show', :as => :page
   match 'pages/:page_name' => 'pages#show', :as => :page
