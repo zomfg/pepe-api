@@ -1,9 +1,12 @@
 defaults: &defaults
-  api_agent_name: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0b9) Gecko/20100101 Firefox/4.0b9
-  kym_base_uri: http://knowyourmeme.com
-  kym_memes_ctrl: memes
-  kym_videos_ctrl: videos
-  kym_photos_ctrl: photos
+  api:
+    agent_name: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0b9) Gecko/20100101 Firefox/4.0b9b9
+    secret_key: secret
+    response_message_header: X-Kmm-Sayz
+    request_signature_components: REQUEST_METHOD,HTTP_DATE,PATH_INFO
+    request_signature_header: HTTP_AUTHORIZATION
+  kym:
+    base_url: http://knowyourmeme.com
 
 development:
   <<: *defaults

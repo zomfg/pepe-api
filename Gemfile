@@ -9,6 +9,8 @@ gem 'pg'
 
 gem 'httpclient'
 
+gem 'ruby-hmac'
+
 gem 'json'
 gem 'json_pure'
 gem 'plist'
