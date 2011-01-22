@@ -6,7 +6,12 @@ class VideosController < ApiController
     else
       res = @kym_client.get_page "#{KYM_CONFIG['kym']['base_uri']}/memes/#{params[:meme_name]}/videos?page=#{page_num}&video_page=#{page_num}"
     end
-    @videos = Kym::Parser::Videos.list res.content
-    respond_with @videos
+    begin
+      @videos = Kym::Parser::Videos.list res.content
+    rescue
+      http_error :parsing_error
+    else
+      respond_with @videos
+    end unless bad_response? res
   end
 end

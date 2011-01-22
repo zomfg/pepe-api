@@ -6,7 +6,7 @@ defaults: &defaults
     request_signature_components: REQUEST_METHOD,HTTP_DATE,PATH_INFO
     request_signature_header: HTTP_AUTHORIZATION
   kym:
-    base_url: http://knowyourmeme.com
+    base_uri: http://knowyourmeme.com
 
 development:
   <<: *defaults

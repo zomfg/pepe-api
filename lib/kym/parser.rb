@@ -2,7 +2,7 @@ module Kym::Parser
 
   module Memes
     def Memes.single(page_html)
-      JSON.parse page_html unless page_html.match(/<html/)
+      JSON.parse page_html
     end
 
     def Memes.list(page_html)
