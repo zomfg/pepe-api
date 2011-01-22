@@ -31,8 +31,10 @@ class ApiController < ApplicationController
     signature_componenets = []
     KYM_CONFIG['api']['request_signature_components'].split(',').each {|k| signature_componenets << request.env[k]}
     signature_componenets = signature_componenets.join('|')
-    expected_signature = HMAC::SHA1.hexdigest(KYM_CONFIG['api']['secret_key'], signature_componenets)
-    http_error :bad_signature if Base64.decode64(request.headers[KYM_CONFIG['api']['request_signature_header']]) != expected_signature
+    expected_signature = HMAC::SHA1.new(KYM_CONFIG['api']['secret_key'])
+    expected_signature.update(signature_componenets)
+    http_error :bad_signature if request.headers[KYM_CONFIG['api']['request_signature_header']] != Base64.encode64(expected_signature.digest).strip && \
+      request.headers[KYM_CONFIG['api']['request_signature_header']] != Base64.encode64(expected_signature.hexdigest).strip
   end
 
   def http_error(error_code)
