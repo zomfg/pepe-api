@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   respond_to :html, :xml, :json
-  before_filter :authenticate
+#  before_filter :authenticate
 
   def initialize
     @kym_client = Kym::Client.new

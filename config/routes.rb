@@ -1,18 +1,17 @@
 Kym::Application.routes.draw do
+  resources :videos
+  resources :pictures
+  resources :episodes
+  resources :updates
 
+  resources :memes do
+    resources :videos
+    resources :pictures
+    resources :comments
+  end
 
-  match 'episodes' => 'episodes#index', :as => :episodes
-  match 'updates' => 'updates#index', :as => :updates
-  match 'videos' => 'videos#index', :as => :videos
-  match 'pictures' => 'pictures#index', :as => :pictures
-  match 'memes' => 'memes#index', :as => :memes
-  match 'memes/:meme_name' => 'memes#show', :as => :meme
-  match 'memes/:meme_name/videos' => 'videos#index', :as => :meme_videos
-  match 'memes/:meme_name/pictures' => 'pictures#index', :as => :meme_pictures
-  match 'memes/:meme_name/comments' => 'comments#index', :as => :meme_comments
-
-  match ':page_name' => 'pages#show', :as => :page
-  match 'pages/:page_name' => 'pages#show', :as => :page
+  match 'pages/:page_name' => 'pages#show', :as => :pages
+  match ':page_name' => 'pages#show', :as => :pages
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -68,6 +67,6 @@ Kym::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  match ':controller(/:action(/:id(.:format)))'
+  #match ':controller(/:action(/:id(.:format)))'
   root :to => 'pages#show'
 end

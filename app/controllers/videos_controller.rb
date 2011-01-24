@@ -4,7 +4,7 @@ class VideosController < ApiController
     if params[:meme_name].nil?
       res = @kym_client.get_page "#{KYM_CONFIG['kym']['base_uri']}/videos?page=#{page_num}"
     else
-      res = @kym_client.get_page "#{KYM_CONFIG['kym']['base_uri']}/memes/#{params[:meme_name]}/videos?page=#{page_num}&video_page=#{page_num}"
+      res = @kym_client.get_page "#{KYM_CONFIG['kym']['base_uri']}/memes/#{params[:meme_id]}/videos?page=#{page_num}&video_page=#{page_num}"
     end
     begin
       @videos = Kym::Parser::Videos.list res.content

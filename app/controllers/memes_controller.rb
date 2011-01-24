@@ -12,7 +12,7 @@ class MemesController < ApiController
   end
 
   def show
-    res = @kym_client.get_page "#{KYM_CONFIG['kym']['base_uri']}/memes/#{params[:meme_name]}.json"
+    res = @kym_client.get_page "#{KYM_CONFIG['kym']['base_uri']}/memes/#{params[:id]}.json"
     begin
       @meme = Kym::Parser::Memes.single res.content
     rescue

@@ -9,13 +9,10 @@ module Kym::Parser
       hpdoc = Hpricot page_html
       memes = []
       hpdoc.search('table.entry_list td').each do |meme_element|
-        title_link = meme_element.at('h2 a')
-        thumb = meme_element.at('img').attributes
-        memes << {
-          :title => title_link.inner_text,
-          :slug => title_link.attributes['href'].split('/').last,
-          :thumb => thumb['src']
-          }
+        m = Meme.new
+        m.title = meme_element.at('h2 a').inner_text
+        m.thumb = meme_element.at('img').attributes['src']
+        memes << m
       end
       memes
     end
@@ -26,12 +23,12 @@ module Kym::Parser
       hpdoc = Hpricot page_html.gsub(/(<\/?)(article|section)(>?)/, '\\1div\\3')
       comments = []
       hpdoc.search('div.comments_list div.comment').each do |comment|
-        comments << {
-          :user_url => comment.at('a').attributes['href'],
-          :user_name => comment.at('a img').attributes['title'],
-          :user_icon => comment.at('a img').attributes['src'],
-          :message => comment.at('div.message').inner_html
-          }
+        c = Comment.new
+        c.user_url  = comment.at('a').attributes['href']
+        c.user_name = comment.at('a img').attributes['title']
+        c.user_icon = comment.at('a img').attributes['src']
+        c.message   = comment.at('div.message').inner_html
+        comments << c
       end
       comments
     end
@@ -43,12 +40,12 @@ module Kym::Parser
       pictures = []
       hpdoc.search('table.photo_list a.photo').each do |picture_element|
         thumb = picture_element.at('img').attributes
-        pictures << {
-          :url => picture_element.attributes['href'],
-          :title => thumb['title'],
-          :thumb => thumb['src'],
-          :original => thumb['src'].gsub('list', 'original')
-          }
+        p = Picture.new
+        p.url     = picture_element.attributes['href']
+        p.title   = thumb['title']
+        p.thumb   = thumb['src']
+        p.original= thumb['src'].gsub('list', 'original')
+        pictures << p
       end
       pictures
     end
@@ -62,12 +59,12 @@ module Kym::Parser
         thumb = video_element.at('img').attributes
         ytid = thumb['src'].split('/')[-2]
         ytid = nil if ytid.match(/[a-zA-Z0-9_-]{11}/).nil?
-        videos << {
-          :url => video_element.attributes['href'],
-          :youtube_id => ytid,
-          :title => thumb['title'],
-          :thumb => thumb['src'],
-          }
+        v = Video.new
+        v.url       = video_element.attributes['href']
+        v.youtube_id= ytid
+        v.title     = thumb['title']
+        v.thumb     = thumb['src']
+        videos << v
       end
       videos
     end
@@ -81,12 +78,12 @@ module Kym::Parser
         ytid = episode.at('div.video object param').attributes['value'].split('?')[0].split('/')[-1]
         ytid = nil if ytid.match(/[a-zA-Z0-9_-]{11}/).nil?
         info_elem = episode.at('div.body')
-        episodes << {
-          :youtube_id => ytid,
-          :meme_url => info_elem.at('h1 a').attributes['href'],
-          :meme_name => info_elem.at('h1 a').inner_html,
-          :short_description => info_elem.at('p').inner_html
-        }
+        e = Episode.new
+        e.youtube_id  = ytid
+        e.meme_url    = info_elem.at('h1 a').attributes['href']
+        e.meme_name   = info_elem.at('h1 a').inner_html
+        e.description = info_elem.at('p').inner_html
+        episodes << e
       end
       episodes
     end
@@ -97,13 +94,13 @@ module Kym::Parser
       hpdoc = Hpricot page_html.gsub(/(<\/?)(article|section)(>?)/, '\\1div\\3')
       updates = []
       hpdoc.search('div#feed_items div.nf_item div.rel').each do |update|
-        updates << {
-          :status => update.at('div.badge img').attributes['title'],
-          :meme_url => update.at('div.info h1 a').attributes['href'],
-          :meme_name => update.at('div.info h1 a').inner_html,
-          :short_description => update.at('div.summary').inner_html,
-          :thumb => update.at('a.photo img').attributes['src']
-        }
+        u = Update.new
+        u.status      = update.at('div.badge img').attributes['title']
+        u.url         = update.at('div.info h1 a').attributes['href']
+        u.meme_name   = update.at('div.info h1 a').inner_html
+        u.description = update.at('div.summary').inner_html
+        u.thumb       = update.at('a.photo img').attributes['src']
+        updates << u
       end
       updates
     end
